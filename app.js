@@ -1,5 +1,7 @@
 const axios = require('axios')
 const moment = require('moment')
+const TelegramBot = require('node-telegram-bot-api');
+require('dotenv').config()
 
 const getCenters = async (districtId, date) => {
     try {
@@ -10,22 +12,52 @@ const getCenters = async (districtId, date) => {
         });
         return resp.data.centers
     } catch (e) {
-        console.log('Error', e,)
+        console.log('Error', e)
     }
 }
 
-async function getFilteredCenters() {
+async function getFilteredCenters(age) {
     const centers = await getCenters('313', moment().format('DD-MM-YYYY'))
     const filteredCenters = centers.filter(center => {
         const sessions = center.sessions
         for (const session of sessions) {
-            if (session.available_capacity > 0 && session.min_age_limit === 18) return true
+            if (session.available_capacity > 0 && session.min_age_limit === age && session.date >= moment().format('DD-MM-YYYY')) return true
         }
     })
 
-    console.log(filteredCenters)
-
+    // console.log(filteredCenters)
+    return filteredCenters
 }
 
-getFilteredCenters()
 
+// replace the value below with the Telegram token you receive from @BotFather
+const token = process.env.TOKEN
+const chatId = process.env.CHATID
+
+const bot = new TelegramBot(token, { polling: false });
+
+const telegrambot = (message, json) => {
+    try {
+        bot.sendMessage(chatId, message + '\n\n<pre>' + JSON.stringify(json, null, 2) + '</pre>', {
+            parse_mode: 'html'
+        });
+    } catch (err) {
+        console.log('Something went wrong when trying to send a Telegram notification', err);
+    }
+}
+
+async function sendMessage() {
+    const filteredCenters = await getFilteredCenters(45)
+    let formattedMessgae = []
+    if (filteredCenters.length > 0) {
+        formattedMessgae = filteredCenters.map(center => {
+            return "Name: " + center.name + "     Address: " + center.address
+        })
+    }
+
+    if (formattedMessgae.length > 0) {
+        telegrambot('Vaccine Available. Schedule ASAP', formattedMessgae)
+    }
+}
+
+sendMessage()

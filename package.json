@@ -5,7 +5,9 @@
   "main": "app.js",
   "dependencies": {
     "axios": "^0.21.1",
-    "moment": "^2.29.1"
+    "dotenv": "^9.0.2",
+    "moment": "^2.29.1",
+    "node-telegram-bot-api": "^0.53.0"
   },
   "devDependencies": {},
   "scripts": {
