@@ -1,0 +1,16 @@
+{
+  "name": "notifyvaccineslots",
+  "version": "1.0.0",
+  "description": "App to get notified when vaccine slots are available",
+  "main": "app.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vineet Prasad Verma",
+  "license": "ISC"
+}
