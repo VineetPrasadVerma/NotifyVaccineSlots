@@ -36,9 +36,9 @@ const chatId = process.env.CHATID
 
 const bot = new TelegramBot(token, { polling: false });
 
-const telegrambot = (message, json) => {
+const telegrambot = (message) => {
     try {
-        bot.sendMessage(chatId, message + '\n\n<pre>' + JSON.stringify(json, null, 2) + '</pre>', {
+        bot.sendMessage(chatId, message, {
             parse_mode: 'html'
         });
     } catch (err) {
@@ -51,13 +51,13 @@ async function sendMessage() {
     let formattedMessgae = []
     if (filteredCenters.length > 0) {
         formattedMessgae = filteredCenters.map(center => {
-            return "Name: " + center.name + "     Address: " + center.address
+            return "<b>Name:</b> " + center.name + '\n' + "<b>Address:</b> " + center.address + '\n' + "<b>Available Capacity:</b> " + center.sessions[0].available_capacity + '\n\n'
         })
     }
 
     if (formattedMessgae.length > 0) {
-        telegrambot('Vaccine Available. Schedule ASAP', formattedMessgae)
+        telegrambot(`<b>Vaccine Available. Schedule ASAP</b>\n\n${formattedMessgae.join('')}`)
     }
 }
 
-sendMessage()
+setInterval(() => sendMessage(), 5000)
