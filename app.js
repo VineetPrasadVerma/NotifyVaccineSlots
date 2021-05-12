@@ -47,7 +47,7 @@ const telegrambot = (message) => {
 }
 
 async function sendMessage() {
-    const filteredCenters = await getFilteredCenters(45)
+    const filteredCenters = await getFilteredCenters(18)
     let formattedMessgae = []
     if (filteredCenters.length > 0) {
         formattedMessgae = filteredCenters.map(center => {
