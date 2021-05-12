@@ -62,4 +62,4 @@ async function sendMessage() {
     }
 }
 
-setInterval(() => sendMessage(), 5000)
+setInterval(() => sendMessage(), 20000)
