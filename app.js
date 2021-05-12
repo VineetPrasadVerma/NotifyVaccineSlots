@@ -7,7 +7,9 @@ const getCenters = async (districtId, date) => {
     try {
         const resp = await axios.get(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${districtId}&date=${date}`, {
             headers: {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36',
+                'Accept-Language': 'en_US',
+                'Accept': 'application/json',
             }
         });
         return resp.data.centers
@@ -51,7 +53,7 @@ async function sendMessage() {
     let formattedMessgae = []
     if (filteredCenters.length > 0) {
         formattedMessgae = filteredCenters.map(center => {
-            return "<b>Name:</b> " + center.name + '\n' + "<b>Address:</b> " + center.address + '\n' + "<b>Available Capacity:</b> " + center.sessions[0].available_capacity + '\n\n'
+            return "<b>Name:</b> " + center.name + '\n' + "<b>Address:</b> " + center.address + '\n\n'
         })
     }
 
