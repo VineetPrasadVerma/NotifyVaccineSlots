@@ -35,6 +35,7 @@ async function getFilteredCenters(age) {
 // replace the value below with the Telegram token you receive from @BotFather
 const token = process.env.TOKEN
 const chatId = process.env.CHATID
+const time = process.env.TIME
 
 const bot = new TelegramBot(token, { polling: false });
 
@@ -62,4 +63,4 @@ async function sendMessage() {
     }
 }
 
-setInterval(() => sendMessage(), 20000)
+setInterval(() => sendMessage(), time)
