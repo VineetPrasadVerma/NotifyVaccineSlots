@@ -14,7 +14,8 @@ const getCenters = async (districtId, date) => {
         });
         return resp.data.centers
     } catch (e) {
-        console.log('Error', e)
+        console.log('Error', e, new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }))
+        return []
     }
 }
 
